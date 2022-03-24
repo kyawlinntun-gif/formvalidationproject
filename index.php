@@ -14,6 +14,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nameError = "Name is required";
         } else {
             $name = getUserInput($_POST["name"]);
+            // Name validation
+            if (!preg_match("/^[A-Za-z. ]*$/", $name)) {
+                $nameError = "Only letters and white space are allowed!";
+            }
         }
 
         // Email
@@ -21,6 +25,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $emailError = "Email is required";
         } else {
             $email = getUserInput($_POST["email"]);
+            if (!preg_match("/^[a-zA-Z0-9._-]{3,}@[a-zA-Z0-9]{3,}.[a-zA-Z0-9._-]{2,}$/", $email)) {
+                $emailError = "Invalid email format!";
+            }
         }
 
         // Gender
@@ -35,6 +42,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $websiteError = "Website is required";
         } else {
             $website = getUserInput($_POST["website"]);
+            if (!preg_match("/^(https:|ftp:|http:)\/\/+[a-zA-Z0-9-_%\$?\#\~`!=&+*.\/]+\.[a-zA-Z0-9-_%\$?\#\~`!=&+*.\/]*$/", $website)) {
+                $websiteError = "Invalid website address format!";
+            }
+        }
+    }
+
+    if (!empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['gender']) && !empty($_POST['website'])) {
+        if (preg_match("/^[A-Za-z. ]*$/", $name) && preg_match("/^[a-zA-Z0-9._-]{3,}@[a-zA-Z0-9]{3,}.[a-zA-Z0-9._-]{2,}$/", $email) && preg_match("/^(https:|ftp:|http:)\/\/+[a-zA-Z0-9-_%\$?\#\~`!=&+*.\/]+\.[a-zA-Z0-9-_%\$?\#\~`!=&+*.\/]*$/", $website)) {
+            echo "<h2>Your Submit Information</h2><br>";
+            echo "Name: " . ucwords($_POST['name']) . "<br>";
+            echo "Email: {$_POST['email']}<br>";
+            echo "Gender: {$_POST['gender']}<br>";
+            echo "Website: {$_POST['website']}<br>";
+            echo "Comment: {$_POST['comment']}<br>";
+        } else {
+            echo "
+                <h2 class='text-danger'>
+                Please complete and correct your form again
+                </h2>
+            ";
         }
     }
 }
@@ -100,13 +127,13 @@ function getUserInput($data)
                                 <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="male">
+                                        <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
                                         <label class="form-check-label" for="male">
                                             Male
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="female">
+                                        <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
                                         <label class="form-check-label" for="female">
                                             Female
                                         </label>
