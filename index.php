@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $name = getUserInput($_POST["name"]);
             // Name validation
-            if (!preg_match("/^[A-Za-z. ]*$/", $name)) {
+            if (!preg_match("/^[A-Za-z\. ]*$/", $name)) {
                 $nameError = "Only letters and white space are allowed!";
             }
         }
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (!empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['gender']) && !empty($_POST['website'])) {
-        if (preg_match("/^[A-Za-z. ]*$/", $name) && preg_match("/^[a-zA-Z0-9._-]{3,}@[a-zA-Z0-9]{3,}.[a-zA-Z0-9._-]{2,}$/", $email) && preg_match("/^(https:|ftp:|http:)\/\/+[a-zA-Z0-9-_%\$?\#\~`!=&+*.\/]+\.[a-zA-Z0-9-_%\$?\#\~`!=&+*.\/]*$/", $website)) {
+        if (preg_match("/^[A-Za-z\. ]*$/", $name) && preg_match("/^[a-zA-Z0-9._-]{3,}@[a-zA-Z0-9]{3,}.[a-zA-Z0-9._-]{2,}$/", $email) && preg_match("/^(https:|ftp:|http:)\/\/+[a-zA-Z0-9-_%\$?\#\~`!=&+*.\/]+\.[a-zA-Z0-9-_%\$?\#\~`!=&+*.\/]*$/", $website)) {
             echo "<h2>Your Submit Information</h2><br>";
             echo "Name: " . ucwords($_POST['name']) . "<br>";
             echo "Email: {$_POST['email']}<br>";
