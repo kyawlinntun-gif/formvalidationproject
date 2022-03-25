@@ -56,6 +56,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Gender: {$_POST['gender']}<br>";
             echo "Website: {$_POST['website']}<br>";
             echo "Comment: {$_POST['comment']}<br>";
+
+            /* ---------- Start of Send Email ---------- */
+            $receiver = "kyawlinntun100@gmail.com";
+            $subject = "Contact Form";
+            $body = "A person name : " . $_POST['name'] . " with the Email : " . $_POST['email'] . " have Gender : " . $_POST['gender'] . " have website of : " . $_POST['website'] . " Comment:: " . $_POST['comment'];
+            $sender = "From:kyawlinntun100@gmail.com";
+            if (mail($receiver, $subject, $body, $sender)) {
+                echo "Email sent successfully to $receiver";
+            } else {
+                echo "Sorry, failed while sending mail!";
+            }
+            /* ---------- End of Send Email ---------- */
         } else {
             echo "
                 <h2 class='text-danger'>
